@@ -1,14 +1,9 @@
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-export class AppComponent {
-  feature:string='recipe';
-  setFeature(feature:string)
-  {
-    this.feature=feature;
-  }
-}
+<app-header (tog)="feature=$event"></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <app-recipes *ngIf="feature==='recipe'"></app-recipes>
+      <app-shopping-list *ngIf="feature==='shopping'"></app-shopping-list>
+    </div>
+  </div>
+</div>
