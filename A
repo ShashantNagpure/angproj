@@ -10,3 +10,7 @@
     
   }
    @ViewChild('card') input;
+   
+       overflow:hidden;
+    transition:height 5s ease-out;
+    height:500px;
