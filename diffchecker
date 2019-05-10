@@ -1,0 +1,69 @@
+package com.citibank.citiconnect.validationengine.datamigration.service;
+
+import java.util.Iterator;
+
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+public class Diffchecker  {
+	static void print(Object obj) {
+		if(obj.getClass().equals(org.codehaus.jettison.json.JSONObject.class))
+		{
+			
+		}
+		
+	}
+	static void printObject(JSONObject obj) throws JSONException
+	{
+		for(int i=0;i<obj.length();i++)
+		{
+			String key=obj.names().getString(i);
+			System.out.println(key);
+			System.out.println(obj.get(key).getClass());
+			if(obj.get(key).getClass().equals(org.codehaus.jettison.json.JSONArray.class))
+			{
+				printArray(obj.getJSONArray(obj.names().getString(i)));
+			}
+		
+			else if(obj.get(key).getClass().equals(org.codehaus.jettison.json.JSONObject.class)) {
+				printObject(obj.getJSONObject(obj.names().getString(i)));
+			}
+			else {
+				System.out.println("this is key"+obj.get(key));
+			}
+			
+			
+		}
+	}
+	static void printArray(JSONArray arr) throws JSONException
+	{
+		for(int i=0;i<arr.length();i++)
+		{
+			if(arr.get(i).getClass().equals(org.codehaus.jettison.json.JSONObject.class))
+			{
+				printObject(arr.getJSONObject(i));
+			}
+			else {
+				System.out.println(arr.getString(i));
+			}
+		}
+	}
+	public static void main(String[] args) throws JSONException{
+	
+	String q="[\r\n" + 
+			"    { \"name\":\"Ford\", \"models\":[ \"Fiesta\", \"Focus\", \"Mustang\" ] },\r\n" + 
+			"    { \"name\":\"BMW\", \"models\":[ \"320\", \"X3\", \"X5\" ] },\r\n" + 
+			"    { \"name\":\"Fiat\", \"models\":[ \"500\", \"Panda\" ] }\r\n" + 
+			"  ]";
+	String p="[\r\n" + 
+			"    { \"name\":\"Ford\", \"models\":[ \"Fiesta\", \"Focus\", \"Mustang\" ] },\r\n" + 
+			"    { \"name\":\"BMW\", \"models\":[ \"320\", \"X3\", \"X5\" ] },\r\n" + 
+			"    { \"name\":\"Fiat\", \"models\":[ \"500\", \"Panda\" ] }\r\n" + 
+			"  ]";
+		JSONArray data1=new JSONArray(q);
+		JSONArray data2=new JSONArray(p);
+		
+	
+	}
+}
