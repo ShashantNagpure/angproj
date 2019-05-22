@@ -1,0 +1,244 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.stream.Collectors;
+class Pair<T1>
+{
+	public T1 key;
+	public T1 value;
+	Pair(T1 key,T1 value)
+	{
+		this.key=key;
+		this.value=value;
+	}
+	@Override
+	public String toString() {
+		return key.toString()+" - "+value.toString();
+	}
+}
+class Node{
+	public Node left;
+	public Node right;
+	public Long separator;
+	Long min;
+	Long max;
+	PriorityQueue<Pair<Long>>intervals;
+	@Override
+	public String toString() {
+		if(this.separator!=null) {
+		return min.toString()+" "+separator.toString()+" "+max.toString();}
+		else {
+			return min.toString()+" null "+max.toString();
+		}
+	}
+	Node(long min,long max)
+	{
+		this.min=min;
+		this.max=max;
+		this.separator=null;
+		intervals=new PriorityQueue<Pair<Long>>(new Comparator<Pair<Long>>() {
+			 @Override
+           public int compare(Pair<Long> o1, 
+                              Pair<Long> o2) 
+           { 
+			  
+               if ((o1.key-o1.value)> (o2.key-o2.value)) 
+                   return -1; 
+               else if ((o1.key-o1.value)==(o2.key-o2.value)) 
+                   return 0; 
+ 
+               else
+                   return 1; 
+           } 
+		});
+	}
+	Node(long min,long max,long separator)
+	{
+		this.min=min;
+		this.max=max;
+		this.separator=separator;
+		intervals=new PriorityQueue<Pair<Long>>(new Comparator<Pair<Long>>() {
+			 @Override
+          public int compare(Pair<Long> o1, 
+                             Pair<Long> o2) 
+          { 
+			  
+              if ((o1.key-o1.value)> (o2.key-o2.value)) 
+                  return -1; 
+              else if ((o1.key-o1.value)==(o2.key-o2.value)) 
+                  return 0; 
+
+              else
+                  return 1; 
+          } 
+		});
+		
+	}
+}
+
+public class TestClass {
+	
+	static Node create(ArrayList<Long>arr,int i,int j)
+	{
+		if(i<j-1)
+		{
+			
+			int mid=i+j;
+			int ds=mid&1;
+			if(ds==0) {mid=mid/2;}
+			else {mid=mid/2;mid++;}
+			Node root=new Node(arr.get(i),arr.get(j),arr.get(mid));
+//			System.out.println(root.min+" "+ root.separator+" "+root.max+" queue: "+root.intervals);
+			root.left=create(arr,i,mid);
+			root.right=create(arr,mid,j);
+			return root;
+		}
+		else {
+			Node root=new Node(arr.get(i),arr.get(j));
+//			System.out.println(root.min+" "+ root.separator+" "+root.max+" queue: "+root.intervals);
+			return root;
+		}
+	}
+	static void print(Node root)
+	{
+		if(root.separator!=null)
+		{
+			print(root.left);
+			System.out.println(root.min+" "+ root.separator+" "+root.max+" queue: "+root.intervals);
+			print(root.right);
+		}
+		else {
+			System.out.println(root.min+" "+ root.separator+" "+root.max+" queue: "+root.intervals);
+		}
+		
+	}
+	static void insert(Node root,Pair<Long>interval)
+	{
+		if(interval.key<=root.min&&interval.value>=root.max)
+		{
+			root.intervals.add(interval);
+		}
+		else {
+			if(interval.key<root.separator)
+			{
+				insert(root.left,interval);
+			}
+			if(interval.value>root.separator)
+			{
+				insert(root.right,interval);
+			}
+		}
+	}
+	static void search(Node root,long x,ArrayList<Long>intervs)
+	{
+		if(root==null)
+		{
+			return;
+		}
+		else {
+			for(Pair<Long> pq:root.intervals)
+			{
+				intervs.add(pq.value-pq.key);
+			}
+			if(root.separator!=null) {
+			if(root.separator>=x)
+			{
+				search(root.left,x,intervs);
+			}
+			if(root.separator<=x)
+			{
+				search(root.right,x,intervs);
+			}
+			}
+			
+		}
+	}
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		
+		   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		   BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		   int n=Integer.parseInt(br.readLine());
+		   int l=n;
+		   ArrayList<Integer>uniqueintervals=new ArrayList<Integer>();
+		   ArrayList<Pair<Integer>>pl=new ArrayList<Pair<Integer>>();
+		   
+		   while(n-->0)
+		   {
+			   String s[]=br.readLine().trim().split(" ");
+			   int a=Integer.parseInt(s[0]);
+			   int b=Integer.parseInt(s[1]);
+			   pl.add(new Pair(a,b));
+			   uniqueintervals.add(b-a+1);			   
+		   }
+		   
+		   Collections.sort(uniqueintervals);
+		   uniqueintervals.stream().distinct().collect(Collectors.toList());
+		   int queries=Integer.parseInt(br.readLine());
+		   int[][] qs = new int[queries+2*l][];
+		   int i;
+		   for(i=0;i<queries;i++)
+		   {
+			   String s[]=br.readLine().trim().split(" ");
+			   int k=Integer.parseInt(s[0]);
+			   int x=Integer.parseInt(s[1]);
+			   qs[i]=new int[] {x,k,i,0};
+			   
+		   }
+		   for(int j=0;j<l;j++)
+		   {
+			   qs[i]=new int[] {pl.get(j).key,pl.get(j).value-pl.get(j).key+1,1};i++;
+			   qs[i]=new int[] {pl.get(j).value+1,pl.get(j).value-pl.get(j).key+1,-1};i++;
+		   }
+			Arrays.sort(qs, new Comparator<int[]>() {
+				public int compare(int[] a, int[] b) {
+					if(a[0] != b[0])return a[0] - b[0];
+					return a.length - b.length;
+				}
+			});
+		   int []ans=new int[queries];
+		   int []ft=new int[uniqueintervals.size()+3];
+		   System.out.println();
+		   for(int[]e:qs)
+		   {
+			   if(e.length==4)
+			   {
+				   int count=0;int start=0;
+				   while(count<=e[1]&&start<ft.length)
+				   {
+					   count=count+ft[start];
+					   start++;
+				   }
+				   if(count<e[1])
+				   {
+					   ans[e[2]]=-1;
+				   }
+				   else
+				   {
+					   ans[e[2]]=uniqueintervals.get(start-1);
+				   }
+			   }
+			   else {
+				   int ind = uniqueintervals.indexOf(new Integer(e[1]));
+				   ft[ind]+=e[2];				   
+			   }
+		   }
+		   for(int p:ans)
+		   {
+			   bw.write(p);
+			   bw.write("\n");
+		   }
+		   bw.close();
+		   
+		   
+		   
+		   
+	}
+	}
