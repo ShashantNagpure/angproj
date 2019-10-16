@@ -1,16 +1,47 @@
-    console.log(this.input.nativeElement.style.transition);
-    var sectionHeight = this.input.nativeElement.scrollHeight;
-    // var elementTransition = this.input.nativeElement.style.transition;
-    // this.input.nativeElement.style.transition = '';
-    this.input.nativeElement.style.height = sectionHeight + 'px';
-    // this.input.nativeElement.style.transition = elementTransition;
-    this.input.nativeElement.style.height = 0 + 'px';
-      ngAfterViewInit() {
-    console.log(this.input.nativeElement.scrollHeight);
-    
-  }
-   @ViewChild('card') input;
-   
-       overflow:hidden;
-    transition:height 5s ease-out;
-    height:500px;
+Hi Malvika,
+Yesterday, I was told to get off the project as well as the team by team lead as well as my manager without any prior notice or discussion about my performance
+or discipline.
+I was said a lot of things like 'you should get lesser salary' and other unsatisfactory remarks
+.I dont know what I am supposed to do as I am shocked and lost for words. I was not prepared for any such meeting as my manager masked the
+subject as "Glance reprioritaztion and availabilty". (Glance is project name)
+I did not even get a chance to properly explain myself as I was flooded with allegations by the team lead
+.I had joined the team just 2 months back and my manager never even discussed with me or gave any feedback about any issue relating with performance or discipline.
+.Just after the meeting my code was rejected by my manager without any reason even after passing all the checks, denying me even
+minute satisfaction of completing a part of the project in which I have put in hours.
+I kindly request you to tell me what are my responsibilites which I need to fulfill going forward
+
+Thanks and Regards
+Shashant Nagpure
+SN91698
+
+
+
+
+Today I was told to get off Glance as well as the team by Shashank, with Rhushiraj. 
+Without any prior notice or discussion about my performance or discipline, it came as a shock when I was belittled and mocked. I was said things like 
+"you should get less salary" and a lot of unsatisfactory things which borders on bullying. I was not aware about this meeting beforehand as Rhushiraj 
+named it "Glance reprioritization and Availabilty"
+I dont know if this is politics or personal vendetta by the said person, who could have talked to me atleast once and addressed this issue because he is supposed 
+to be my manager. 
+
+I know a lot of issues and escalations are happening with Glance but that does not make me the scapegoat. Regarding the issue which we know is happening
+because Anusua's password had expired and refreshing is not happening. This information was known to Rhushi for a long amount of time before it actually did expire.
+This issue could have easily fixed before I joined or given priority after, if it had not been neglected it until it finally broke.
+I was blamed for all the issues happening in Glance in the meeting by Shashank. I find this amusing to be honest because not a single line of my code was in
+production, and still I was held guilty
+
+
+I did not have any ill feelings toward anyone before this, but this really makes me doubt this person. To be so cold hearted and go behind my back, which I find
+find so hard to explain myself as why would someone do this.
+
+
+I have put in hours understanding the code,if you can just look at my sticky notes which is filled with info regarding glance. I was confident that I know the
+project well enough to take it forward
+I have completed the udeploy component successfully, which nobody cared to look at, even after informing rhushiraj
+
+Even my code was rejected just after the meeting to mock me.It was told to me by Rhushi that my code quality is not good enough in front of Shashank
+Frankly, I was not aware of the sonar checks before raising the pull request, because I have not worked with Bitbucket before which is true for many grads 
+who did not get much work in the first rotation.But I fixed those sonar issues in 1-2 days and it has since passed all the checks.
+
+I find this very demeaning and unprofessional to be thrown out of the project as well as the team in such a harsh manner without any prior discussion, 
+for my code to be rejected without any reason, and denied of even minute satisfaction of working here.
